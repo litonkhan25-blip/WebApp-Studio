@@ -122,20 +122,9 @@
                                     <h4 class="font-bold text-white text-base">Cyber Runner 3D</h4>
                                     <span class="px-2.5 py-1 bg-purple-500/10 text-purple-400 border border-purple-500/20 text-[10px] rounded-full font-medium">Ready</span>
                                 </div>
-                                <p class="text-xs text-gray-400">Endless futuristic runner game built with WebGL and AI scripts.</p>
+                                <p class="text-xs text-gray-400">Endless arcade bouncing ball simulation game.</p>
                                 <div class="flex items-center gap-2 pt-2">
                                     <button onclick="playGame('Cyber Runner 3D')" class="px-3 py-1.5 bg-purple-600/20 hover:bg-purple-600 text-purple-400 hover:text-white text-xs rounded-xl transition font-medium">Play Test</button>
-                                    <button class="px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded-xl transition">Export Assets</button>
-                                </div>
-                            </div>
-                            <div class="bg-[#131d31] border border-gray-800 rounded-2xl p-5 space-y-3">
-                                <div class="flex items-center justify-between">
-                                    <h4 class="font-bold text-white text-base">29 Card Game</h4>
-                                    <span class="px-2.5 py-1 bg-purple-500/10 text-purple-400 border border-purple-500/20 text-[10px] rounded-full font-medium">Generated</span>
-                                </div>
-                                <p class="text-xs text-gray-400">Card game strategy simulation.</p>
-                                <div class="flex items-center gap-2 pt-2">
-                                    <button onclick="playGame('29 Card Game')" class="px-3 py-1.5 bg-purple-600/20 hover:bg-purple-600 text-purple-400 hover:text-white text-xs rounded-xl transition font-medium">Play Test</button>
                                     <button class="px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded-xl transition">Export Assets</button>
                                 </div>
                             </div>
@@ -146,7 +135,7 @@
         </main>
     </div>
 
-    <!-- CREATE GAME MODAL PROMPT -->
+    <!-- CREATE GAME MODAL -->
     <div id="game-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-[#07090e]/80 backdrop-blur-md px-4 hidden">
         <div class="max-w-lg w-full bg-[#0e1626] border border-gray-800 rounded-3xl p-8 shadow-2xl space-y-6 relative">
             <button onclick="closeGameModal()" class="absolute top-5 right-5 text-gray-400 hover:text-white text-sm">
@@ -172,26 +161,27 @@
         </div>
     </div>
 
-    <!-- PLAY TEST SIMULATOR MODAL -->
-    <div id="play-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-lg px-4 hidden">
-        <div class="max-w-2xl w-full bg-[#0e1626] border border-purple-500/30 rounded-3xl p-6 shadow-2xl space-y-4 relative">
+    <!-- REAL PLAYABLE GAME CANVAS MODAL -->
+    <div id="play-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-lg px-4 hidden">
+        <div class="max-w-lg w-full bg-[#0e1626] border border-purple-500/40 rounded-3xl p-6 shadow-2xl space-y-4 relative">
             <div class="flex items-center justify-between border-b border-gray-800 pb-3">
-                <h3 id="play-game-title" class="text-lg font-bold text-white flex items-center gap-2">
-                    <i class="fa-solid fa-gamepad text-purple-500"></i> Game Simulation
+                <h3 id="play-game-title" class="text-base font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-gamepad text-purple-500"></i> Live Game Sandbox
                 </h3>
                 <button onclick="closePlayModal()" class="text-gray-400 hover:text-white px-3 py-1 bg-gray-800 rounded-lg text-xs font-semibold">
                     <i class="fa-solid fa-xmark"></i> Close
                 </button>
             </div>
-            <div class="w-full h-80 bg-[#07090e] border border-gray-800 rounded-2xl flex flex-col items-center justify-center p-6 text-center space-y-4 relative overflow-hidden">
-                <div class="absolute inset-0 bg-gradient-to-tr from-purple-900/10 to-blue-900/10 pointer-events-none"></div>
-                <div class="w-16 h-16 rounded-2xl bg-purple-600/20 border border-purple-500/40 text-purple-400 flex items-center justify-center text-2xl shadow-lg animate-bounce">
-                    <i class="fa-solid fa-play"></i>
+            
+            <!-- Real HTML5 Canvas for Game Execution -->
+            <div class="flex flex-col items-center space-y-3">
+                <canvas id="gameCanvas" width="400" height="250" class="bg-black border border-purple-500/30 rounded-xl shadow-inner cursor-pointer"></canvas>
+                <div class="flex items-center justify-between w-full px-2 text-xs text-gray-400">
+                    <span>Score: <strong id="game-score" class="text-purple-400">0</strong></span>
+                    <span class="text-emerald-400 font-medium">Touch or Use Arrow Keys to Move Paddle</span>
                 </div>
-                <h4 class="text-white font-bold text-base" id="active-game-name">Loading Game Engine...</h4>
-                <p class="text-xs text-gray-400 max-w-sm">AI simulation environment is active. Press start to test controls and graphics.</p>
-                <button onclick="alert('Game Started Successfully! Enjoy playing.')" class="px-6 py-2.5 bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold rounded-xl transition shadow-lg shadow-purple-600/30">
-                    Start Interactive Session
+                <button onclick="restartGame()" class="w-full py-2.5 bg-purple-600 hover:bg-purple-500 text-white font-semibold rounded-xl text-xs transition shadow-lg shadow-purple-600/30">
+                    Restart Game
                 </button>
             </div>
         </div>
@@ -199,6 +189,13 @@
 
     <!-- SCRIPT -->
     <script>
+        let gameInterval = null;
+        let canvas, ctx;
+        let x, y, dx, dy, ballRadius;
+        let paddleHeight, paddleWidth, paddleX;
+        let rightPressed = false, leftPressed = false;
+        let score = 0;
+
         window.onload = function() {
             const token = localStorage.getItem("webapp_auth_token");
             if (!token) {
@@ -209,6 +206,12 @@
                     document.getElementById('sidebar-user-email').innerText = email;
                 }
             }
+
+            canvas = document.getElementById("gameCanvas");
+            ctx = canvas.getContext("2d");
+            document.addEventListener("keydown", keyDownHandler, false);
+            document.addEventListener("keyup", keyUpHandler, false);
+            canvas.addEventListener("touchmove", touchMoveHandler, false);
         }
 
         function openGameModal() {
@@ -220,12 +223,104 @@
         }
 
         function playGame(gameTitle) {
-            document.getElementById('active-game-name').innerText = gameTitle + " Engine Ready";
+            document.getElementById('play-game-title').innerHTML = `<i class="fa-solid fa-gamepad text-purple-500"></i> ${gameTitle} - Playing`;
             document.getElementById('play-modal').classList.remove('hidden');
+            initGameVariables();
+            if(gameInterval) clearInterval(gameInterval);
+            gameInterval = setInterval(drawGame, 16);
         }
 
         function closePlayModal() {
             document.getElementById('play-modal').classList.add('hidden');
+            if(gameInterval) clearInterval(gameInterval);
+        }
+
+        function initGameVariables() {
+            x = canvas.width / 2;
+            y = canvas.height - 30;
+            dx = 3;
+            dy = -3;
+            ballRadius = 8;
+            paddleHeight = 10;
+            paddleWidth = 75;
+            paddleX = (canvas.width - paddleWidth) / 2;
+            score = 0;
+            document.getElementById("game-score").innerText = score;
+        }
+
+        function keyDownHandler(e) {
+            if(e.key === "Right" || e.key === "ArrowRight") rightPressed = true;
+            else if(e.key === "Left" || e.key === "ArrowLeft") leftPressed = true;
+        }
+
+        function keyUpHandler(e) {
+            if(e.key === "Right" || e.key === "ArrowRight") rightPressed = false;
+            else if(e.key === "Left" || e.key === "ArrowLeft") leftPressed = false;
+        }
+
+        function touchMoveHandler(e) {
+            let rect = canvas.getBoundingClientRect();
+            let touchX = e.touches[0].clientX - rect.left;
+            paddleX = touchX - paddleWidth / 2;
+            if(paddleX < 0) paddleX = 0;
+            if(paddleX + paddleWidth > canvas.width) paddleX = canvas.width - paddleWidth;
+        }
+
+        function drawBall() {
+            ctx.beginPath();
+            ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+            ctx.fillStyle = "#a855f7";
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function drawPaddle() {
+            ctx.beginPath();
+            ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
+            ctx.fillStyle = "#3b82f6";
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function drawGame() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBall();
+            drawPaddle();
+
+            if(x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
+                dx = -dx;
+            }
+            if(y + dy < ballRadius) {
+                dy = -dy;
+            } else if(y + dy > canvas.height - ballRadius) {
+                if(x > paddleX && x < paddleX + paddleWidth) {
+                    dy = -dy;
+                    score++;
+                    document.getElementById("game-score").innerText = score;
+                } else {
+                    // Game Over condition
+                    clearInterval(gameInterval);
+                    ctx.fillStyle = "red";
+                    ctx.font = "20px Arial";
+                    ctx.fillText("GAME OVER", canvas.width / 2 - 60, canvas.height / 2);
+                    return;
+                }
+            }
+
+            if(rightPressed && paddleX < canvas.width - paddleWidth) {
+                paddleX += 6;
+            } else if(leftPressed && paddleX > 0) {
+                paddleX -= 6;
+            }
+
+            x += dx;
+            y += dy;
+        }
+
+        function restartGame() {
+            if(gameInterval) clearInterval(gameInterval);
+            initGameVariables();
+            gameInterval = setInterval(drawGame, 16);
         }
 
         function handleCreateGame(e) {
