@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <title>Database Manager - WebApp Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-[#0b0f19] text-gray-200 font-sans">
+    <div class="flex h-screen overflow-hidden">
+        <aside class="w-64 bg-[#0e1626] border-r border-gray-800 hidden md:flex flex-col">
+            <nav class="px-4 py-4 space-y-1">
+                <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-400 hover:text-white"><i class="fa-solid fa-house"></i> Dashboard</a>
+                <a href="database.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-blue-600 text-white"><i class="fa-solid fa-database"></i> Database Manager</a>
+            </nav>
+        </aside>
+        <main class="flex-1 p-8 overflow-y-auto">
+            <h1 class="text-2xl font-bold text-white mb-4"><i class="fa-solid fa-database text-purple-400"></i> Database Manager</h1>
+            <p class="text-gray-400 mb-6">Manage tables, schemas, and cloud data backend connectors.</p>
+            <button class="px-6 py-2.5 bg-purple-600 hover:bg-purple-500 text-white font-semibold rounded-xl text-sm">Create New Table</button>
+        </main>
+    </div>
+</body>
+</html>
