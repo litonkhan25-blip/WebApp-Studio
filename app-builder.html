@@ -1,24 +1,220 @@
-<!DOCTYPE html>
-<html lang="bn">
+ <!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI App Builder - WebApp Studio</title>
+    
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-[#0b0f19] text-gray-200 font-sans">
+<body class="bg-[#0b0f19] text-gray-200 font-sans antialiased selection:bg-blue-600 selection:text-white">
+
+    <!-- MAIN APP BUILDER LAYOUT -->
     <div class="flex h-screen overflow-hidden">
-        <aside class="w-64 bg-[#0e1626] border-r border-gray-800 hidden md:flex flex-col">
-            <nav class="px-4 py-4 space-y-1">
-                <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-400 hover:text-white"><i class="fa-solid fa-house"></i> Dashboard</a>
-                <a href="app-builder.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-600 text-white"><i class="fa-solid fa-mobile-screen"></i> AI App Builder</a>
-            </nav>
+        
+        <!-- Sidebar -->
+        <aside class="w-64 bg-[#0e1626] border-r border-gray-800 flex flex-col justify-between hidden md:flex">
+            <div>
+                <!-- Logo -->
+                <div class="flex items-center gap-3 px-6 py-5 border-b border-gray-800">
+                    <div class="bg-gradient-to-r from-blue-600 to-indigo-600 p-2 rounded-lg text-white font-bold text-lg">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <span class="text-xl font-bold tracking-wide text-white">WebApp <span class="text-indigo-400">Studio</span></span>
+                </div>
+
+                <!-- Navigation Links -->
+                <nav class="px-4 py-4 space-y-1">
+                    <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-800/50 hover:text-white transition">
+                        <i class="fa-solid fa-house"></i> Dashboard
+                    </a>
+                    <a href="website-builder.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-800/50 hover:text-white transition">
+                        <i class="fa-solid fa-globe"></i> AI Website Builder
+                    </a>
+                    <a href="app-builder.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-blue-600 text-white font-medium transition shadow-lg shadow-blue-600/20">
+                        <i class="fa-solid fa-mobile-screen"></i> AI App Builder
+                    </a>
+                    <a href="game-builder.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-800/50 hover:text-white transition">
+                        <i class="fa-solid fa-gamepad"></i> AI Game Builder
+                    </a>
+                    <a href="code-editor.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-800/50 hover:text-white transition">
+                        <i class="fa-solid fa-code"></i> Code Editor
+                    </a>
+                    <a href="preview.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-800/50 hover:text-white transition">
+                        <i class="fa-solid fa-eye"></i> Preview & Testing
+                    </a>
+                    <a href="projects.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-800/50 hover:text-white transition">
+                        <i class="fa-solid fa-folder"></i> Project Manager
+                    </a>
+                    <a href="database.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-800/50 hover:text-white transition">
+                        <i class="fa-solid fa-database"></i> Database Manager
+                    </a>
+                    <a href="publish.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-800/50 hover:text-white transition">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Publish & Export
+                    </a>
+                    <a href="settings.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-800/50 hover:text-white transition">
+                        <i class="fa-solid fa-gear"></i> Settings & Privacy
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Profile & Logout Box -->
+            <div class="p-4 m-4 bg-[#131d31] rounded-2xl border border-gray-800 flex items-center justify-between">
+                <div class="flex items-center gap-3 overflow-hidden">
+                    <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center font-bold justify-center text-xs">
+                        <i class="fa-solid fa-shield"></i>
+                    </div>
+                    <div class="truncate">
+                        <p class="text-xs font-semibold text-white truncate" id="sidebar-user-email">Active User</p>
+                        <p class="text-[10px] text-emerald-400">Secure Session</p>
+                    </div>
+                </div>
+                <button onclick="handleLogout()" class="text-red-400 hover:text-red-300 p-2 text-sm transition" title="Log Out">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+            </div>
         </aside>
-        <main class="flex-1 p-8 overflow-y-auto">
-            <h1 class="text-2xl font-bold text-white mb-4"><i class="fa-solid fa-mobile-screen text-emerald-500"></i> AI App Builder</h1>
-            <p class="text-gray-400 mb-6">Build Android & iOS mobile applications effortlessly.</p>
-            <button class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold rounded-xl text-sm">Create New App</button>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 flex flex-col h-screen overflow-y-auto">
+            
+            <!-- Top Navbar -->
+            <header class="h-16 bg-[#0e1626]/80 backdrop-blur border-b border-gray-800 px-6 flex items-center justify-between sticky top-0 z-10">
+                <div class="flex items-center gap-4">
+                    <span class="text-sm text-gray-400">Build Android & iOS Mobile Applications Effortlessly</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button onclick="handleLogout()" class="px-4 py-2 bg-red-600/20 border border-red-500/30 hover:bg-red-600 text-red-400 hover:text-white text-xs font-semibold rounded-xl transition flex items-center gap-2 shadow-lg">
+                        <i class="fa-solid fa-right-from-bracket"></i> Log Out
+                    </button>
+                </div>
+            </header>
+
+            <!-- App Builder Workspace Body -->
+            <div class="p-6 space-y-6">
+                <div class="bg-[#0e1626] border border-gray-800 rounded-3xl p-8 space-y-6 shadow-xl">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-gray-800 pb-6">
+                        <div>
+                            <h1 class="text-2xl font-bold text-white flex items-center gap-3">
+                                <i class="fa-solid fa-mobile-screen text-blue-500"></i> AI Mobile App Builder
+                            </h1>
+                            <p class="text-xs text-gray-400 mt-1">Describe your mobile app features, UI layout, and AI will generate the complete source structure.</p>
+                        </div>
+                        <button onclick="openAppModal()" class="px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-2xl text-sm transition shadow-lg shadow-blue-600/30 flex items-center gap-2">
+                            <i class="fa-solid fa-plus"></i> Create New App
+                        </button>
+                    </div>
+
+                    <!-- Active Projects List Area -->
+                    <div class="space-y-4">
+                        <h3 class="text-sm font-semibold text-gray-300 uppercase tracking-wider">Your Generated Apps</h3>
+                        <div id="app-list-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Dynamic App Cards Will Show Here -->
+                            <div class="bg-[#131d31] border border-gray-800 rounded-2xl p-5 space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <h4 class="font-bold text-white text-base">Royal Ludo Game App</h4>
+                                    <span class="px-2.5 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] rounded-full font-medium">Ready</span>
+                                </div>
+                                <p class="text-xs text-gray-400">Multiplayer board game structure with responsive mobile UI.</p>
+                                <div class="flex items-center gap-2 pt-2">
+                                    <button class="px-3 py-1.5 bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white text-xs rounded-xl transition font-medium">Open Editor</button>
+                                    <button class="px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded-xl transition">Export APK</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
+
+    <!-- CREATE APP MODAL PROMPT -->
+    <div id="app-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-[#07090e]/80 backdrop-blur-md px-4 hidden">
+        <div class="max-w-lg w-full bg-[#0e1626] border border-gray-800 rounded-3xl p-8 shadow-2xl space-y-6 relative">
+            <button onclick="closeAppModal()" class="absolute top-5 right-5 text-gray-400 hover:text-white text-sm">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="space-y-2">
+                <h2 class="text-xl font-bold text-white">Generate App with AI</h2>
+                <p class="text-xs text-gray-400">Enter your app concept or project name.</p>
+            </div>
+            <form onsubmit="handleCreateApp(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-400 uppercase mb-1">App Name / Project Title</label>
+                    <input type="text" id="app-name-input" required class="w-full bg-[#131d31] border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 text-sm" placeholder="e.g., Royal Ludo, E-Commerce Store...">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-400 uppercase mb-1">Describe Functionality & Features</label>
+                    <textarea id="app-desc-input" rows="3" required class="w-full bg-[#131d31] border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 text-sm resize-none" placeholder="Describe screens, database needs, and UI style..."></textarea>
+                </div>
+                <button type="submit" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl text-sm transition shadow-lg shadow-blue-600/30">
+                    Generate App Source Code
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- SCRIPT -->
+    <script>
+        window.onload = function() {
+            const token = localStorage.getItem("webapp_auth_token");
+            if (!token) {
+                // If not logged in, redirect back to main index/login page
+                window.location.href = "index.html";
+            } else {
+                const email = localStorage.getItem("webapp_user_email");
+                if(email) {
+                    document.getElementById('sidebar-user-email').innerText = email;
+                }
+            }
+        }
+
+        function openAppModal() {
+            document.getElementById('app-modal').classList.remove('hidden');
+        }
+
+        function closeAppModal() {
+            document.getElementById('app-modal').classList.add('hidden');
+        }
+
+        function handleCreateApp(e) {
+            e.preventDefault();
+            const appName = document.getElementById('app-name-input').value;
+            const appDesc = document.getElementById('app-desc-input').value;
+
+            if(appName && appDesc) {
+                const container = document.getElementById('app-list-container');
+                container.innerHTML += `
+                    <div class="bg-[#131d31] border border-gray-800 rounded-2xl p-5 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-bold text-white text-base">${appName}</h4>
+                            <span class="px-2.5 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] rounded-full font-medium">Generated</span>
+                        </div>
+                        <p class="text-xs text-gray-400">${appDesc}</p>
+                        <div class="flex items-center gap-2 pt-2">
+                            <button class="px-3 py-1.5 bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white text-xs rounded-xl transition font-medium">Open Editor</button>
+                            <button class="px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs rounded-xl transition">Export APK</button>
+                        </div>
+                    </div>
+                `;
+                closeAppModal();
+                alert("App generated successfully with AI!");
+            }
+        }
+
+        function handleLogout() {
+            localStorage.removeItem("webapp_auth_token");
+            localStorage.removeItem("webapp_user_email");
+            window.location.href = "index.html";
+        }
+    </script>
 </body>
 </html>
