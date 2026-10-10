@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebApp Studio - Dashboard</title>
+    <title>WebApp Studio - Luxury AI Workspace</title>
     
     <!-- Security Headers -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
@@ -15,10 +15,63 @@
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-[#0b0f19] text-gray-200 font-sans antialiased">
+<body class="bg-[#07090e] text-gray-200 font-sans antialiased selection:bg-blue-600 selection:text-white">
 
-    <!-- MAIN DASHBOARD (Always clean & accessible by default) -->
-    <div class="flex h-screen overflow-hidden">
+    <!-- ================= GUEST / AUTH LANDING VIEW (Shown before login) ================= -->
+    <div id="guest-landing-view" class="min-h-screen flex flex-col justify-between relative overflow-hidden">
+        
+        <!-- Background Glow Effects -->
+        <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <!-- Luxury Navbar -->
+        <header class="w-full border-b border-gray-800/60 bg-[#07090e]/80 backdrop-blur-md px-8 py-5 flex items-center justify-between z-10">
+            <div class="flex items-center gap-3">
+                <div class="bg-gradient-to-tr from-blue-600 to-indigo-500 p-2.5 rounded-xl text-white font-bold text-lg shadow-lg shadow-blue-600/30">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </div>
+                <span class="text-2xl font-black tracking-wider text-white">WebApp <span class="text-indigo-400">Studio</span></span>
+            </div>
+            <div class="flex items-center gap-4">
+                <button onclick="openAuthModal('login')" class="px-5 py-2.5 text-sm font-semibold text-gray-300 hover:text-white transition">
+                    Log In
+                </button>
+                <button onclick="openAuthModal('register')" class="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-sm font-semibold rounded-xl transition shadow-lg shadow-blue-600/30">
+                    Create New Account
+                </button>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <main class="flex-1 flex flex-col items-center justify-center text-center px-4 z-10 max-w-4xl mx-auto space-y-8 py-16">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-full text-blue-400 text-xs font-medium tracking-wide">
+                <i class="fa-solid fa-shield-halved"></i> Enterprise-Grade Secure AI Workspace
+            </div>
+            <h1 class="text-5xl md:text-7xl font-black text-white tracking-tight leading-tight">
+                Build Next-Gen Apps & Websites with <span class="bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">AI Intelligence</span>
+            </h1>
+            <p class="text-base md:text-lg text-gray-400 max-w-2xl font-normal">
+                The ultimate luxury multi-page development environment. Secure, fast, and engineered for high-performance creation.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center gap-4 pt-4">
+                <button onclick="openAuthModal('register')" class="w-full sm:w-auto px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-2xl transition shadow-xl shadow-blue-600/40 text-sm flex items-center justify-center gap-3">
+                    <span>Get Started Free</span> <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <button onclick="openAuthModal('login')" class="w-full sm:w-auto px-8 py-4 bg-[#111827] hover:bg-[#1f2937] border border-gray-800 text-white font-bold rounded-2xl transition text-sm">
+                    Access Dashboard
+                </button>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="w-full text-center py-6 border-t border-gray-900 text-xs text-gray-500">
+            &copy; 2026 WebApp Studio. All rights reserved. Secured & Encrypted.
+        </footer>
+    </div>
+
+
+    <!-- ================= MAIN SECURE DASHBOARD (Shown after successful login) ================= -->
+    <div id="authenticated-dashboard" class="flex h-screen overflow-hidden hidden">
         
         <!-- Sidebar -->
         <aside class="w-64 bg-[#0e1626] border-r border-gray-800 flex flex-col justify-between hidden md:flex">
@@ -66,20 +119,19 @@
                 </nav>
             </div>
 
-            <!-- Profile / Auth Action Box at Bottom -->
+            <!-- Profile & Logout Box -->
             <div class="p-4 m-4 bg-[#131d31] rounded-2xl border border-gray-800 flex items-center justify-between">
-                <div class="flex items-center gap-3 overflow-hidden" id="user-info-box">
-                    <div class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center font-bold justify-center text-xs">
-                        <i class="fa-solid fa-user"></i>
+                <div class="flex items-center gap-3 overflow-hidden">
+                    <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center font-bold justify-center text-xs">
+                        <i class="fa-solid fa-shield"></i>
                     </div>
                     <div class="truncate">
-                        <p class="text-xs font-semibold text-white truncate" id="current-user-display">Guest User</p>
-                        <p class="text-[10px] text-gray-400" id="user-status-text">Not logged in</p>
+                        <p class="text-xs font-semibold text-white truncate" id="sidebar-user-email">user@webapp.com</p>
+                        <p class="text-[10px] text-emerald-400">Authenticated</p>
                     </div>
                 </div>
-                <!-- Dynamic Login/Logout Button -->
-                <button onclick="openAuthModal('login')" class="text-blue-400 hover:text-blue-300 p-2 text-sm transition" title="Account Actions">
-                    <i class="fa-solid fa-right-to-bracket" id="auth-action-icon"></i>
+                <button onclick="handleLogout()" class="text-red-400 hover:text-red-300 p-2 text-sm transition" title="Log Out">
+                    <i class="fa-solid fa-right-from-bracket"></i>
                 </button>
             </div>
         </aside>
@@ -92,13 +144,9 @@
                 <div class="flex items-center gap-4">
                     <span class="text-sm text-gray-400">Build Websites, Apps & Games with AI</span>
                 </div>
-                <div class="flex items-center gap-3" id="top-auth-buttons">
-                    <!-- Default buttons if not logged in -->
-                    <button onclick="openAuthModal('login')" class="px-4 py-2 bg-blue-600/20 border border-blue-500/30 hover:bg-blue-600 text-blue-400 hover:text-white text-xs font-semibold rounded-xl transition">
-                        Log In
-                    </button>
-                    <button onclick="openAuthModal('register')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded-xl transition shadow-lg shadow-indigo-600/30">
-                        Create New Account
+                <div class="flex items-center gap-4">
+                    <button onclick="handleLogout()" class="px-4 py-2 bg-red-600/20 border border-red-500/30 hover:bg-red-600 text-red-400 hover:text-white text-xs font-semibold rounded-xl transition flex items-center gap-2 shadow-lg">
+                        <i class="fa-solid fa-right-from-bracket"></i> Log Out
                     </button>
                 </div>
             </header>
@@ -108,8 +156,11 @@
                 <!-- Welcome Banner -->
                 <div class="bg-gradient-to-r from-blue-900/40 via-indigo-900/30 to-purple-900/40 border border-blue-500/20 rounded-3xl p-8 relative overflow-hidden flex flex-col md:flex-row justify-between items-center shadow-xl">
                     <div class="space-y-3 z-10">
-                        <h1 class="text-3xl font-extrabold text-white">Welcome to <span class="text-indigo-400">WebApp Studio</span></h1>
-                        <p class="text-sm text-gray-300 max-w-xl">Your all-in-one platform to create websites, mobile apps and games with AI.</p>
+                        <div class="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs rounded-full font-medium">
+                            <i class="fa-solid fa-circle-check"></i> Secure Session Verified
+                        </div>
+                        <h1 class="text-3xl font-extrabold text-white">Welcome to <span class="text-indigo-400">WebApp Studio Dashboard</span></h1>
+                        <p class="text-sm text-gray-300 max-w-xl">Your luxury workspace is active. Choose any tool from the sidebar to start building.</p>
                         <a href="website-builder.html" class="mt-2 inline-flex items-center gap-2 px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl text-sm transition shadow-lg shadow-blue-600/30">
                             <i class="fa-solid fa-plus"></i> Create New Project
                         </a>
@@ -119,8 +170,9 @@
         </main>
     </div>
 
-    <!-- CLEAN AUTH MODAL (Popup only when user clicks Login or Create Account) -->
-    <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-[#0b0f19]/80 backdrop-blur-md px-4 hidden">
+
+    <!-- ================= AUTHENTICATION MODAL (Login / Register / OTP) ================= -->
+    <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-[#07090e]/90 backdrop-blur-xl px-4 hidden">
         <div class="max-w-md w-full bg-[#0e1626] border border-gray-800 rounded-3xl p-8 shadow-2xl space-y-6 relative">
             
             <!-- Close Button -->
@@ -129,165 +181,141 @@
             </button>
 
             <div class="text-center space-y-2">
-                <div class="inline-flex bg-gradient-to-r from-blue-600 to-indigo-600 p-3 rounded-2xl text-white text-xl font-bold shadow-lg shadow-blue-600/30">
+                <div class="inline-flex bg-gradient-to-r from-blue-600 to-indigo-600 p-3.5 rounded-2xl text-white text-xl font-bold shadow-lg shadow-blue-600/30">
                     <i class="fa-solid fa-shield-halved"></i>
                 </div>
-                <h2 class="text-2xl font-bold text-white" id="modal-heading">Log In</h2>
-                <p class="text-xs text-gray-400" id="modal-subheading">Access your secure WebApp Studio account</p>
+                <h2 class="text-2xl font-bold text-white" id="modal-title">Log In</h2>
+                <p class="text-xs text-gray-400" id="modal-subtitle">Enter your credentials to access WebApp Studio</p>
             </div>
 
             <!-- FORM -->
-            <form id="auth-form-action" class="space-y-4" onsubmit="handleAuthSubmit(event)">
+            <form id="auth-form" class="space-y-4" onsubmit="handleAuthSubmit(event)">
                 <div>
                     <label class="block text-xs font-semibold text-gray-400 uppercase mb-1">Email or Mobile Number</label>
-                    <input type="text" id="user-email-input" required class="w-full bg-[#131d31] border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 text-sm" placeholder="name@example.com or +8801...">
+                    <input type="text" id="auth-identity" required class="w-full bg-[#131d31] border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 text-sm" placeholder="name@example.com or +8801...">
                 </div>
                 <div>
                     <label class="block text-xs font-semibold text-gray-400 uppercase mb-1">Heavy Password</label>
-                    <input type="password" id="user-password-input" required class="w-full bg-[#131d31] border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 text-sm" placeholder="Min 8 chars, A-Z, 0-9, symbol">
-                </div>
-                
-                <!-- OTP Field (Visible during verification state) -->
-                <div id="otp-container" class="hidden space-y-1">
-                    <label class="block text-xs font-semibold text-emerald-400 uppercase mb-1">Enter 6-Digit OTP Code</label>
-                    <input type="text" id="otp-input-field" maxlength="6" class="w-full tracking-widest text-center text-lg bg-[#131d31] border border-emerald-600 rounded-xl px-4 py-3 text-emerald-400 focus:outline-none" placeholder="123456">
+                    <input type="password" id="auth-password" required class="w-full bg-[#131d31] border border-gray-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500 text-sm" placeholder="Min 8 chars, A-Z, 0-9, symbol">
+                    <p class="text-[10px] text-gray-500 mt-1">Must include uppercase, lowercase, number & symbol.</p>
                 </div>
 
-                <button type="submit" id="submit-btn-text" class="w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl text-sm transition shadow-lg shadow-blue-600/30">
+                <!-- OTP Input (Appears during verification step) -->
+                <div id="otp-group" class="hidden space-y-1">
+                    <label class="block text-xs font-semibold text-emerald-400 uppercase mb-1 text-center">Enter 6-Digit OTP Code</label>
+                    <input type="text" id="otp-input" maxlength="6" class="w-full tracking-[0.4em] text-center text-lg bg-[#131d31] border border-emerald-600 rounded-xl px-4 py-3 text-emerald-400 focus:outline-none" placeholder="••••••">
+                </div>
+
+                <button type="submit" id="auth-submit-btn" class="w-full py-3.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl text-sm transition shadow-lg shadow-blue-600/30">
                     Log In
                 </button>
             </form>
 
-            <!-- Toggle between Login and Register -->
+            <!-- Toggle Between Login & Register -->
             <div class="text-center pt-2 border-t border-gray-800">
-                <p class="text-xs text-gray-400" id="toggle-prompt">Don't have an account? <button onclick="switchMode('register')" class="text-blue-400 hover:underline font-semibold">Create New Account</button></p>
+                <p class="text-xs text-gray-400" id="auth-switch-text">
+                    Don't have an account? <button type="button" onclick="switchAuthMode('register')" class="text-blue-400 hover:underline font-semibold">Create New Account</button>
+                </p>
             </div>
         </div>
     </div>
 
-    <!-- SCRIPT FOR DYNAMIC AUTH -->
+
+    <!-- ================= JAVASCRIPT LOGIC ================= -->
     <script>
         let currentMode = 'login'; // 'login' or 'register'
 
         window.onload = function() {
-            checkLoginState();
+            checkUserSession();
         }
 
         function openAuthModal(mode) {
             currentMode = mode;
             document.getElementById('auth-modal').classList.remove('hidden');
-            updateModalUI();
+            updateModalContent();
         }
 
         function closeAuthModal() {
             document.getElementById('auth-modal').classList.add('hidden');
-            document.getElementById('otp-container').classList.add('hidden');
+            document.getElementById('otp-group').classList.add('hidden');
         }
 
-        function switchMode(mode) {
+        function switchAuthMode(mode) {
             currentMode = mode;
-            updateModalUI();
+            updateModalContent();
         }
 
-        function updateModalUI() {
-            const heading = document.getElementById('modal-heading');
-            const subHeading = document.getElementById('modal-subheading');
-            const submitBtn = document.getElementById('submit-btn-text');
-            const togglePrompt = document.getElementById('toggle-prompt');
+        function updateModalContent() {
+            const title = document.getElementById('modal-title');
+            const subtitle = document.getElementById('modal-subtitle');
+            const btn = document.getElementById('auth-submit-btn');
+            const switchText = document.getElementById('auth-switch-text');
+            document.getElementById('otp-group').classList.add('hidden');
 
             if (currentMode === 'login') {
-                heading.innerText = "Log In";
-                subHeading.innerText = "Access your secure WebApp Studio account";
-                submitBtn.innerText = "Log In";
-                togglePrompt.innerHTML = `Don't have an account? <button type="button" onclick="switchMode('register')" class="text-blue-400 hover:underline font-semibold">Create New Account</button>`;
+                title.innerText = "Log In";
+                subtitle.innerText = "Enter your credentials to access WebApp Studio";
+                btn.innerText = "Log In";
+                switchText.innerHTML = `Don't have an account? <button type="button" onclick="switchAuthMode('register')" class="text-blue-400 hover:underline font-semibold">Create New Account</button>`;
             } else {
-                heading.innerText = "Create New Account";
-                subHeading.innerText = "Register for a secure WebApp Studio profile";
-                submitBtn.innerText = "Register & Send OTP";
-                togglePrompt.innerHTML = `Already have an account? <button type="button" onclick="switchMode('login')" class="text-blue-400 hover:underline font-semibold">Log In</button>`;
+                title.innerText = "Create New Account";
+                subtitle.innerText = "Register your secure profile in WebApp Studio";
+                btn.innerText = "Register & Send OTP";
+                switchText.innerHTML = `Already have an account? <button type="button" onclick="switchAuthMode('login')" class="text-blue-400 hover:underline font-semibold">Log In</button>`;
             }
         }
 
         function handleAuthSubmit(e) {
             e.preventDefault();
-            const email = document.getElementById('user-email-input').value;
-            const password = document.getElementById('user-password-input').value;
-            const otpBox = document.getElementById('otp-container');
+            const identity = document.getElementById('auth-identity').value.trim();
+            const password = document.getElementById('auth-password').value;
+            const otpGroup = document.getElementById('otp-group');
 
-            // Password strength validation for heavy security
+            // Heavy password check
             const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!\%*?&]{8,}$/;
             if (!regex.test(password)) {
                 alert("Security Error: Password must be at least 8 characters and include uppercase, lowercase, number, and special symbol!");
                 return;
             }
 
-            if (otpBox.classList.contains('hidden')) {
+            if (otpGroup.classList.contains('hidden')) {
                 // Show OTP Verification Step
-                otpBox.classList.remove('hidden');
-                document.getElementById('submit-btn-text').innerText = "Verify OTP & Complete";
-                alert("[Security Simulation] Your verification OTP code is: 543210");
+                otpGroup.classList.remove('hidden');
+                document.getElementById('auth-submit-btn').innerText = "Verify OTP & Enter Dashboard";
+                alert("[Security Simulation] Your verification OTP code is: 123456");
             } else {
-                const otpVal = document.getElementById('otp-input-field').value;
+                const otpVal = document.getElementById('otp-input').value;
                 if (otpVal.length === 6) {
-                    localStorage.setItem("webapp_logged_in", "true");
-                    localStorage.setItem("webapp_user_email", email);
+                    localStorage.setItem("webapp_auth_token", "active_session_token");
+                    localStorage.setItem("webapp_user_email", identity);
                     closeAuthModal();
-                    checkLoginState();
-                    alert("Authentication successful!");
+                    checkUserSession();
                 } else {
                     alert("Please enter a valid 6-digit OTP code.");
                 }
             }
         }
 
-        function checkLoginState() {
-            const isLoggedIn = localStorage.getItem("webapp_logged_in");
+        function checkUserSession() {
+            const token = localStorage.getItem("webapp_auth_token");
             const email = localStorage.getItem("webapp_user_email");
-            const topAuthButtons = document.getElementById('top-auth-buttons');
-            const currentUserDisplay = document.getElementById('current-user-display');
-            const userStatusText = document.getElementById('user-status-text');
-            const authActionIcon = document.getElementById('auth-action-icon');
+            const guestView = document.getElementById('guest-landing-view');
+            const dashboard = document.getElementById('authenticated-dashboard');
 
-            if (isLoggedIn === "true" && email) {
-                currentUserDisplay.innerText = email;
-                userStatusText.innerText = "Active & Secure";
-                userStatusText.className = "text-[10px] text-emerald-400";
-                authActionIcon.className = "fa-solid fa-right-from-bracket";
-                
-                // Change bottom button action to Logout
-                document.querySelector('#user-info-box').nextElementSibling.setAttribute("onclick", "handleLogout()");
-                
-                // Update top navbar to show Logout
-                topAuthButtons.innerHTML = `
-                    <span class="text-xs text-emerald-400 bg-emerald-950/40 border border-emerald-800 px-3 py-1.5 rounded-xl font-medium"><i class="fa-solid fa-circle-check"></i> ${email}</span>
-                    <button onclick="handleLogout()" class="px-4 py-2 bg-red-600/20 border border-red-500/30 hover:bg-red-600 text-red-400 hover:text-white text-xs font-semibold rounded-xl transition">
-                        Log Out
-                    </button>
-                `;
+            if (token && email) {
+                guestView.classList.add('hidden');
+                dashboard.classList.remove('hidden');
+                document.getElementById('sidebar-user-email').innerText = email;
             } else {
-                currentUserDisplay.innerText = "Guest User";
-                userStatusText.innerText = "Not logged in";
-                userStatusText.className = "text-[10px] text-gray-400";
-                authActionIcon.className = "fa-solid fa-right-to-bracket";
-                
-                document.querySelector('#user-info-box').nextElementSibling.setAttribute("onclick", "openAuthModal('login')");
-
-                topAuthButtons.innerHTML = `
-                    <button onclick="openAuthModal('login')" class="px-4 py-2 bg-blue-600/20 border border-blue-500/30 hover:bg-blue-600 text-blue-400 hover:text-white text-xs font-semibold rounded-xl transition">
-                        Log In
-                    </button>
-                    <button onclick="openAuthModal('register')" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded-xl transition shadow-lg shadow-indigo-600/30">
-                        Create New Account
-                    </button>
-                `;
+                dashboard.classList.add('hidden');
+                guestView.classList.remove('hidden');
             }
         }
 
         function handleLogout() {
-            localStorage.removeItem("webapp_logged_in");
+            localStorage.removeItem("webapp_auth_token");
             localStorage.removeItem("webapp_user_email");
-            checkLoginState();
-            alert("Logged out successfully.");
+            checkUserSession();
             location.reload();
         }
     </script>
