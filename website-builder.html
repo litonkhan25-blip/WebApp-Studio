@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Website Builder - WebApp Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-[#0b0f19] text-gray-200 font-sans">
+    <div class="flex h-screen overflow-hidden">
+        <aside class="w-64 bg-[#0e1626] border-r border-gray-800 flex flex-col justify-between hidden md:flex">
+            <nav class="px-4 py-4 space-y-1">
+                <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-400 hover:bg-gray-800/50 hover:text-white"><i class="fa-solid fa-house"></i> Dashboard</a>
+                <a href="website-builder.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-blue-600 text-white"><i class="fa-solid fa-globe"></i> AI Website Builder</a>
+            </nav>
+        </aside>
+        <main class="flex-1 p-8 overflow-y-auto">
+            <h1 class="text-2xl font-bold text-white mb-4"><i class="fa-solid fa-globe text-blue-500"></i> AI Website Builder</h1>
+            <p class="text-gray-400 mb-6">Describe your website concept, and AI will generate it instantly.</p>
+            <textarea placeholder="e.g., A modern portfolio website for a graphic designer with dark theme..." class="w-full h-32 bg-[#131d31] border border-gray-700 rounded-xl p-4 text-white focus:outline-none focus:border-blue-500"></textarea>
+            <button class="mt-4 px-6 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl text-sm">Generate Website</button>
+        </main>
+    </div>
+</body>
+</html>
