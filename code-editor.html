@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <title>Code Editor - WebApp Studio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-[#0b0f19] text-gray-200 font-sans">
+    <div class="flex h-screen overflow-hidden">
+        <aside class="w-64 bg-[#0e1626] border-r border-gray-800 hidden md:flex flex-col">
+            <nav class="px-4 py-4 space-y-1">
+                <a href="index.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-gray-400 hover:text-white"><i class="fa-solid fa-house"></i> Dashboard</a>
+                <a href="code-editor.html" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-blue-600 text-white"><i class="fa-solid fa-code"></i> Code Editor</a>
+            </nav>
+        </aside>
+        <main class="flex-1 p-8 overflow-y-auto">
+            <h1 class="text-2xl font-bold text-white mb-4"><i class="fa-solid fa-code text-blue-400"></i> Code Editor</h1>
+            <div class="bg-[#111827] border border-gray-800 p-6 rounded-xl font-mono text-sm text-green-400">
+                // Write or edit your source code here...<br>
+                function initWebApp() {<br>
+                &nbsp;&nbsp;console.log("WebApp Studio loaded successfully!");<br>
+                }
+            </div>
+        </main>
+    </div>
+</body>
+</html>
